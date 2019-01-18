@@ -6,3 +6,9 @@ export const createDashboard = (newDashboardTitle) => {
         newDashboardTitle: newDashboardTitle
     };
 };
+
+export const toggleNewDashboardModal = () => {
+    return {
+        type: actionTypes.TOGGLENEWDASHBOARDMODAL
+    };
+};

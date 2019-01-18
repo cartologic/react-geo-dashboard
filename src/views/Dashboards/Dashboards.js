@@ -19,19 +19,9 @@ class Dashboards extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            NewDashboardModal: false,
             newDashboardTitle: '',
             dashboardList: [],
         };
-
-        this.toggleNewDashboardModal = this.toggleNewDashboardModal.bind(this);
-    }
-
-
-    toggleNewDashboardModal() {
-        this.setState({
-            NewDashboardModal: !this.state.NewDashboardModal,
-        });
     }
 
     setNewDashboardTitle = (event) => {
@@ -59,10 +49,10 @@ class Dashboards extends Component {
                 <Row>
                     <Col>
                         <ButtonGroup className="mr-2">
-                            <Button color="primary" onClick={this.toggleNewDashboardModal}>New Dashboard</Button>
-                            <Modal isOpen={this.state.NewDashboardModal} toggle={this.toggleNewDashboardModal}
+                            <Button color="primary" onClick={this.props.onToggleNewDashboardModal}>New Dashboard</Button>
+                            <Modal isOpen={this.props.newDashboardModalOpen} toggle={this.props.onToggleNewDashboardModal}
                                    className={'modal-primary'}>
-                                <ModalHeader toggle={this.toggleNewDashboardModal}>Modal title</ModalHeader>
+                                <ModalHeader toggle={this.props.onToggleNewDashboardModal}>Modal title</ModalHeader>
                                 <ModalBody>
                                     <Form action="" method="post" className="form-horizontal">
                                         <FormGroup row>
@@ -75,7 +65,7 @@ class Dashboards extends Component {
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button disabled={this.state.newDashboardTitle ? false : true} color="primary" onClick={() => this.props.onDashboardCreate(this.state.newDashboardTitle)}>Create</Button>{' '}
-                                    <Button color="secondary" onClick={this.toggleNewDashboardModal}>Cancel</Button>
+                                    <Button color="secondary" onClick={this.props.onToggleNewDashboardModal}>Cancel</Button>
                                 </ModalFooter>
                             </Modal>
                         </ButtonGroup>
@@ -93,13 +83,14 @@ class Dashboards extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        newDashboardModalOpen: state.dashboardsReducer.newDashboardModalOpen,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onDashboardCreate: (newDashboardTitle) => dispatch(actions.createDashboard(newDashboardTitle)),
+        onToggleNewDashboardModal: () => dispatch(actions.toggleNewDashboardModal()),
     }
 }
 

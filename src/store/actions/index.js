@@ -1,3 +1,4 @@
 export {
-    createDashboard
+    createDashboard,
+    toggleNewDashboardModal,
 } from './Dashboards';
