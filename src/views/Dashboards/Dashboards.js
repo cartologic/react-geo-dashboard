@@ -30,14 +30,6 @@ class Dashboards extends Component {
         });
     }
 
-    createNewDashboard = () => {
-        // const dashboard = {
-        //     title: this.state.newDashboardTitle
-        // }
-        // Save the new created dashboard title
-    }
-
-
     componentDidMount() {
         // Load saved dashboard if any
     }

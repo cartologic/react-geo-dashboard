@@ -2,19 +2,33 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     newDashboardModalOpen: false,
+    dashboardList: [],
 };
 
 const createDashboard = (state, action) => {
-    const updatedState = state;
-    console.log("Dashboard Created - " + action.newDashboardTitle);
-    return updatedState;
+    let updatedState = state;
+    let newDashboardList = updatedState.dashboardList;
+    newDashboardList.push({
+        title: action.newDashboardTitle,
+        id: 1,
+    })
+    localStorage.setItem('dashboardList', JSON.stringify(newDashboardList));
+    updatedState = {
+        newDashboardModalOpen: false,
+        dashboardList: newDashboardList,
+    };
+    return {
+        ...state,
+        ...updatedState
+    };
 }
 
 const toggleNewDashboardModal = (state, action) => {
-    let updatedState = state;
-    const newDashboardModalOpen = updatedState.newDashboardModalOpen;
-    updatedState = {newDashboardModalOpen: !newDashboardModalOpen};
-    return updatedState;
+    const updatedState = {newDashboardModalOpen: !state.newDashboardModalOpen};
+    return {
+        ...state,
+        ...updatedState
+    };
 }
 
 const reducer = (state = initialState, action) => {
