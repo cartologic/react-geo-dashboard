@@ -12,6 +12,7 @@ import {
     Row,
 } from 'reactstrap';
 
+
 class Dashboards extends Component {
     constructor(props) {
         super(props);
@@ -51,6 +52,7 @@ class Dashboards extends Component {
 
 
     render() {
+        console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`)
         return (
             <div className="animated fadeIn">
                 <Row>

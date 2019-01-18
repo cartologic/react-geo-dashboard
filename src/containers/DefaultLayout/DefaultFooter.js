@@ -15,7 +15,7 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span><a href="http://cartologic.com/">Cartologic</a> &copy;</span>
+        <span><a href="https://github.com/cartologic/geo-dashboard">Geo Dashboard v{process.env.REACT_APP_VERSION}</a> &copy;</span>
         <span className="ml-auto">Powered by <a href="http://cartologic.com/">Cartologic R&D</a></span>
       </React.Fragment>
     );
