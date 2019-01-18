@@ -1,0 +1,1 @@
+export const CREATE_DASHBOARD = 'CREATE_DASHBOARD';

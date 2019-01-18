@@ -11,6 +11,8 @@ import {
     ModalHeader,
     Row,
 } from 'reactstrap';
+import * as actions from '../../store/actions/index';
+import {connect} from "react-redux";
 
 
 class Dashboards extends Component {
@@ -52,7 +54,6 @@ class Dashboards extends Component {
 
 
     render() {
-        console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`)
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -73,7 +74,7 @@ class Dashboards extends Component {
                                     </Form>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" onClick={this.createNewDashboard}>Create</Button>{' '}
+                                    <Button disabled={this.state.newDashboardTitle ? false : true} color="primary" onClick={() => this.props.onDashboardCreate(this.state.newDashboardTitle)}>Create</Button>{' '}
                                     <Button color="secondary" onClick={this.toggleNewDashboardModal}>Cancel</Button>
                                 </ModalFooter>
                             </Modal>
@@ -90,4 +91,16 @@ class Dashboards extends Component {
     }
 }
 
-export default Dashboards;
+const mapStateToProps = state => {
+    return {
+
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onDashboardCreate: (newDashboardTitle) => dispatch(actions.createDashboard(newDashboardTitle)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboards);
