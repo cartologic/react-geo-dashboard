@@ -9,16 +9,8 @@ import {
     ModalBody,
     ModalFooter,
     ModalHeader,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
     Row,
 } from 'reactstrap';
-
-
-import Dashboard from "../../components/Dashboard/Dashboard";
-import axios from 'axios';
-
 
 class Dashboards extends Component {
     constructor(props) {
@@ -27,13 +19,6 @@ class Dashboards extends Component {
             NewDashboardModal: false,
             newDashboardTitle: '',
             dashboardList: [],
-            dashboardAPI: {
-                total_count: 0,
-                next_url: '',
-                previous_url: '',
-                pages_count: 0,
-                displayed_pagination: [],
-            },
         };
 
         this.toggleNewDashboardModal = this.toggleNewDashboardModal.bind(this);
@@ -53,62 +38,19 @@ class Dashboards extends Component {
     }
 
     createNewDashboard = () => {
-        const dashboard = {
-            title: this.state.newDashboardTitle
-        }
-        axios.post('http://127.0.0.1:8000/api/dashboards/create/', dashboard)
-            .then(result => {
-                console.log(result)
-            })
+        // const dashboard = {
+        //     title: this.state.newDashboardTitle
+        // }
+        // Save the new created dashboard title
     }
 
-    handleIncomingDataFromAPI = (APIResult, pageNumber = 1) => {
-        let displayed_pagination = [];
-        for (let i = 0; i < Math.ceil(APIResult.data.count / 8); i++) {
-            displayed_pagination.push(
-                <PaginationItem key={i + 1} onClick={() => this.handlePageTransition(i + 1)}
-                                active={i + 1 === pageNumber ? true : false}>
-                    <PaginationLink tag="button">
-                        {i + 1}
-                    </PaginationLink>
-                </PaginationItem>
-            )
-        }
-        this.setState({
-            dashboardList: APIResult.data.results,
-            dashboardAPI: {
-                total_count: APIResult.data.count,
-                next_url: APIResult.data.next,
-                previous_url: APIResult.data.previous,
-                pages_count: Math.ceil(APIResult.data.count / 8),
-                displayed_pagination: displayed_pagination,
-            }
-        });
-    }
-
-    handlePageTransition = (pageNumber) => {
-        axios.get(`http://127.0.0.1:8000/api/dashboards/?page=` + pageNumber)
-            .then(APIResult => {
-                this.handleIncomingDataFromAPI(APIResult, pageNumber);
-            })
-    }
 
     componentDidMount() {
-        this.handlePageTransition(1)
-    }
-
-    getDisplayedPagination = () => {
-        return(
-            <Pagination>
-                {this.state.dashboardAPI.displayed_pagination}
-            </Pagination>
-        );
+        // Load saved dashboard if any
     }
 
 
     render() {
-        const dashboardList = this.state.dashboardList.map((dashboard, i) => <Dashboard key={dashboard.id} dashboardObject={dashboard}/>);
-
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -140,10 +82,6 @@ class Dashboards extends Component {
                     </Col>
                 </Row>
                 <Row className="top-buffer">
-                    {dashboardList}
-                </Row>
-                <Row className="top-buffer">
-                    {this.getDisplayedPagination()}
                 </Row>
             </div>
         );
