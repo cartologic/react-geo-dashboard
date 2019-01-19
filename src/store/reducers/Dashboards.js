@@ -9,9 +9,11 @@ const initialState = {
 const createDashboard = (state, action) => {
     let updatedState = state;
     let newDashboardList = updatedState.dashboardList;
+    let currentDate = new Date();
     newDashboardList.push({
         title: action.newDashboardTitle,
         id: uuidv(),
+        date_created: currentDate,
     })
     localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
     updatedState = {
