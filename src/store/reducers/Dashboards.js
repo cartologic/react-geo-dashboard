@@ -4,6 +4,7 @@ const uuidv = require('uuid/v4');
 const initialState = {
     newDashboardModalOpen: false,
     dashboardList: [],
+    deleteDashboardModalOpen: false,
 };
 
 const createDashboard = (state, action) => {
@@ -47,11 +48,20 @@ const loadSavedDashboards = (state, action) => {
     };
 }
 
+const deleteDashboard = (state, action) => {
+    const updatedState = {deleteDashboardModalOpen: !state.deleteDashboardModalOpen};
+    return {
+        ...state,
+        ...updatedState
+    };
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.CREATE_DASHBOARD: return createDashboard(state, action);
         case actionTypes.TOGGLENEWDASHBOARDMODAL: return toggleNewDashboardModal(state, action);
         case actionTypes.LOADSAVEDDASHBOARDS: return loadSavedDashboards(state, action);
+        case actionTypes.DELETEDASHBOARD: return deleteDashboard(state, action);
         default: return state;
     }
 };

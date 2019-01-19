@@ -36,7 +36,7 @@ class Dashboards extends Component {
 
 
     render() {
-        const dashboardList = this.props.dashboardList.map((dashboard, index) => <Dashboard key={index} dashboardObject={dashboard}/>);
+        const dashboardList = this.props.dashboardList.map((dashboard, index) => <Dashboard key={index} dashboardObject={dashboard} onDeleteDashboard={this.props.onDeleteDashboard}/>);
 
         return (
             <div className="animated fadeIn">
@@ -80,6 +80,7 @@ const mapStateToProps = state => {
     return {
         newDashboardModalOpen: state.dashboardsReducer.newDashboardModalOpen,
         dashboardList: state.dashboardsReducer.dashboardList,
+        deleteDashboardModalOpen: state.dashboardsReducer.deleteDashboardModalOpen,
     };
 }
 
@@ -88,6 +89,7 @@ const mapDispatchToProps = dispatch => {
         onDashboardCreate: (newDashboardTitle) => dispatch(actions.createDashboard(newDashboardTitle)),
         onToggleNewDashboardModal: () => dispatch(actions.toggleNewDashboardModal()),
         loadSavedDashboards: () => dispatch(actions.loadSavedDashboards()),
+        onDeleteDashboard: () => dispatch(actions.deleteDashboard()),
     }
 }
 
