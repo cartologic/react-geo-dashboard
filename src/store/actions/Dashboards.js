@@ -18,3 +18,16 @@ export const loadSavedDashboards = () => {
         type: actionTypes.LOADSAVEDDASHBOARDS
     };
 };
+
+export const deleteDashboard = () => {
+    return {
+        type: actionTypes.DELETEDASHBOARD
+    };
+};
+
+export const continueDeleteDashboard = (dashboardID) => {
+    return {
+        type: actionTypes.CONTINUEDELETEDASHBOARD,
+        dashboardID: dashboardID
+    };
+};

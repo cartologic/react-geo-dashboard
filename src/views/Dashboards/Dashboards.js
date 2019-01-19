@@ -36,7 +36,12 @@ class Dashboards extends Component {
 
 
     render() {
-        const dashboardList = this.props.dashboardList.map((dashboard, index) => <Dashboard key={index} dashboardObject={dashboard}/>);
+        const dashboardList = this.props.dashboardList.map(
+            (dashboard, index) =>
+                <Dashboard key={dashboard.id} dashboardObject={dashboard}
+                           onDeleteDashboard={this.props.onDeleteDashboard}
+                           continueDeleteDashboard={this.props.continueDeleteDashboard}/>
+        );
 
         return (
             <div className="animated fadeIn">
@@ -46,7 +51,7 @@ class Dashboards extends Component {
                             <Button color="primary" onClick={this.props.onToggleNewDashboardModal}>New Dashboard</Button>
                             <Modal isOpen={this.props.newDashboardModalOpen} toggle={this.props.onToggleNewDashboardModal}
                                    className={'modal-primary'}>
-                                <ModalHeader toggle={this.props.onToggleNewDashboardModal}>Modal title</ModalHeader>
+                                <ModalHeader toggle={this.props.onToggleNewDashboardModal}>Create Dashboard</ModalHeader>
                                 <ModalBody>
                                     <Form action="" method="post" className="form-horizontal">
                                         <FormGroup row>
@@ -80,6 +85,7 @@ const mapStateToProps = state => {
     return {
         newDashboardModalOpen: state.dashboardsReducer.newDashboardModalOpen,
         dashboardList: state.dashboardsReducer.dashboardList,
+        deleteDashboardModalOpen: state.dashboardsReducer.deleteDashboardModalOpen,
     };
 }
 
@@ -88,6 +94,8 @@ const mapDispatchToProps = dispatch => {
         onDashboardCreate: (newDashboardTitle) => dispatch(actions.createDashboard(newDashboardTitle)),
         onToggleNewDashboardModal: () => dispatch(actions.toggleNewDashboardModal()),
         loadSavedDashboards: () => dispatch(actions.loadSavedDashboards()),
+        onDeleteDashboard: () => dispatch(actions.deleteDashboard()),
+        continueDeleteDashboard: (dashboardID) => dispatch(actions.continueDeleteDashboard(dashboardID)),
     }
 }
 
