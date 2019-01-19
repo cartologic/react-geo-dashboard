@@ -25,3 +25,9 @@ export const deleteDashboard = (dashboardID) => {
         dashboardID: dashboardID
     };
 };
+
+export const dismissAlert = () => {
+    return {
+        type: actionTypes.DISMISSALERT
+    };
+};

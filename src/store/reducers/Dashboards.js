@@ -4,6 +4,9 @@ const uuidv = require('uuid/v4');
 const initialState = {
     newDashboardModalOpen: false,
     dashboardList: [],
+    alertOpen: false,
+    alertMessage: "Welcome Django User",
+    alertColor: "success",
 };
 
 const createDashboard = (state, action) => {
@@ -19,6 +22,9 @@ const createDashboard = (state, action) => {
     updatedState = {
         newDashboardModalOpen: false,
         dashboardList: newDashboardList,
+        alertOpen: true,
+        alertMessage: "Dashboard Created Successfully!",
+        alertColor: "success",
     };
     return {
         ...state,
@@ -56,10 +62,21 @@ const deleteDashboard = (state, action) => {
             localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
             updatedState = {
                 dashboardList: newDashboardList,
+                alertOpen: true,
+                alertMessage: "Dashboard Deleted Successfully!",
+                alertColor: "danger",
             };
             break;
         }
     }
+    return {
+        ...state,
+        ...updatedState
+    };
+}
+
+const dismissAlert = (state, action) => {
+    const updatedState = {alertOpen: !state.alertOpen};
     return {
         ...state,
         ...updatedState
@@ -72,6 +89,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.TOGGLENEWDASHBOARDMODAL: return toggleNewDashboardModal(state, action);
         case actionTypes.LOADSAVEDDASHBOARDS: return loadSavedDashboards(state, action);
         case actionTypes.DELETEDASHBOARD: return deleteDashboard(state, action);
+        case actionTypes.DISMISSALERT: return dismissAlert(state, action);
         default: return state;
     }
 };

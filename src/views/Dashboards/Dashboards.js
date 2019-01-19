@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    Alert,
     Button,
     ButtonGroup,
     Col,
@@ -44,6 +45,9 @@ class Dashboards extends Component {
 
         return (
             <div className="animated fadeIn">
+                <Alert color={this.props.alertColor} isOpen={this.props.alertOpen} toggle={this.props.alertDismiss}>
+                    {this.props.alertMessage}
+                </Alert>
                 <Row>
                     <Col>
                         <ButtonGroup className="mr-2">
@@ -84,6 +88,9 @@ const mapStateToProps = state => {
     return {
         newDashboardModalOpen: state.dashboardsReducer.newDashboardModalOpen,
         dashboardList: state.dashboardsReducer.dashboardList,
+        alertOpen: state.dashboardsReducer.alertOpen,
+        alertMessage: state.dashboardsReducer.alertMessage,
+        alertColor: state.dashboardsReducer.alertColor,
     };
 }
 
@@ -93,6 +100,7 @@ const mapDispatchToProps = dispatch => {
         onToggleNewDashboardModal: () => dispatch(actions.toggleNewDashboardModal()),
         loadSavedDashboards: () => dispatch(actions.loadSavedDashboards()),
         onDeleteDashboard: (dashboardID) => dispatch(actions.deleteDashboard(dashboardID)),
+        alertDismiss: () => dispatch(actions.dismissAlert())
     }
 }
 
