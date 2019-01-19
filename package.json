@@ -1,6 +1,6 @@
 {
     "name": "cartoview_dashboard_2",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "homepage": "https://cartologic.github.io/geo-dashboard",
     "description": "React Dashboard for Geo Data",
     "author": "cartologic <cartoview@cartologic.com> (http://cartologic.com/)",
@@ -36,11 +36,15 @@
         "react-grid-layout": "^0.16.6",
         "react-loadable": "^5.5.0",
         "react-moment": "^0.8.4",
+        "react-redux": "^6.0.0",
         "react-router-config": "^4.4.0-beta.6",
         "react-router-dom": "^4.3.1",
         "react-test-renderer": "^16.6.3",
         "reactstrap": "^6.5.0",
-        "simple-line-icons": "^2.4.1"
+        "redux": "^4.0.1",
+        "redux-thunk": "^2.3.0",
+        "simple-line-icons": "^2.4.1",
+        "uuid": "^3.3.2"
     },
     "devDependencies": {
         "react-scripts": "^2.1.3"

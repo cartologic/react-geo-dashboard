@@ -10,7 +10,7 @@ class Dashboard extends Component {
         this.state = {
             title: this.props.dashboardObject.title,
             id: this.props.dashboardObject.id,
-            date_created: this.props.dashboardObject.date_created
+            date_created: this.props.dashboardObject.date_created,
         };
     }
 
