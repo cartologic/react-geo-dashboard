@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/geo-dashboard/precache-manifest.60d1256d62ab1a6dd123cc9e133b9836.js"
+  "/geo-dashboard/precache-manifest.ee38d3bc6dfe83c9649c12f6d488540e.js"
 );
 
 workbox.clientsClaim();
