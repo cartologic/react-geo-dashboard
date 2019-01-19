@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+const uuidv = require('uuid/v4');
 
 const initialState = {
     newDashboardModalOpen: false,
@@ -10,7 +11,7 @@ const createDashboard = (state, action) => {
     let newDashboardList = updatedState.dashboardList;
     newDashboardList.push({
         title: action.newDashboardTitle,
-        id: 1,
+        id: uuidv(),
     })
     localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
     updatedState = {
