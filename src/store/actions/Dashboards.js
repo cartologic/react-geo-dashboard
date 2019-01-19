@@ -19,15 +19,9 @@ export const loadSavedDashboards = () => {
     };
 };
 
-export const deleteDashboard = () => {
+export const deleteDashboard = (dashboardID) => {
     return {
-        type: actionTypes.DELETEDASHBOARD
-    };
-};
-
-export const continueDeleteDashboard = (dashboardID) => {
-    return {
-        type: actionTypes.CONTINUEDELETEDASHBOARD,
+        type: actionTypes.DELETEDASHBOARD,
         dashboardID: dashboardID
     };
 };

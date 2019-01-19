@@ -3,5 +3,4 @@ export {
     toggleNewDashboardModal,
     loadSavedDashboards,
     deleteDashboard,
-    continueDeleteDashboard,
 } from './Dashboards';

@@ -19,25 +19,33 @@ import connect from "react-redux/es/connect/connect";
 class Dashboard extends Component {
     constructor(props) {
         super(props);
+        this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
         this.state = {
             title: this.props.dashboardObject.title,
             id: this.props.dashboardObject.id,
             date_created: this.props.dashboardObject.date_created,
+            deleteModalOpen: false,
         };
+    }
+
+    toggleDeleteModal() {
+        this.setState({
+            deleteModalOpen: !this.state.deleteModalOpen
+        });
     }
 
     render() {
         return (
-            <Col xs="12" sm="3" md="3" key={this.state.id} id={this.state.id}>
-                <Modal isOpen={this.props.deleteDashboardModalOpen} toggle={this.props.onDeleteDashboard}
+            <Col xs="12" sm="3" md="4" key={this.state.id} id={this.state.id}>
+                <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleDeleteModal}
                        className={'modal-danger'}>
-                    <ModalHeader toggle={this.props.onDeleteDashboard}>Delete Dashboard {this.state.title} ?</ModalHeader>
+                    <ModalHeader toggle={this.toggleDeleteModal}>Delete Dashboard {this.state.title} ?</ModalHeader>
                     <ModalBody>
                         This action can not be undone!
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="danger">Delete</Button>{' '}
-                        <Button color="secondary" onClick={this.props.onDeleteDashboard}>Cancel</Button>
+                        <Button onClick={(event) => {this.toggleDeleteModal(); this.props.onDeleteDashboard(this.state.id)}} color="danger">Delete</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleDeleteModal}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
                 <Card>
@@ -45,7 +53,7 @@ class Dashboard extends Component {
                         <a href={"#/dashboards/"+this.state.id}>{this.state.title}</a>
                         <div className="card-header-actions">
                             <button className="card-header-action btn btn-setting"><i className="icon-settings"></i></button>
-                            <button onClick={this.props.onDeleteDashboard} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
+                            <button onClick={this.toggleDeleteModal} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
                         </div>
                     </CardHeader>
                     <CardBody><img className="card-img-bottom" src={DefaultDashboardLogo}
@@ -59,10 +67,4 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        deleteDashboardModalOpen: state.dashboardsReducer.deleteDashboardModalOpen,
-    };
-}
-
-export default connect(mapStateToProps, null)(Dashboard);
+export default Dashboard;
