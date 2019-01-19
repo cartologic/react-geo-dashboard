@@ -4,6 +4,8 @@ import {Col, CardBody, CardHeader, Card, CardFooter, Modal, ModalHeader,
     ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input,
 } from "reactstrap";
 import Moment from 'react-moment';
+import * as actions from "../../store/actions";
+import {connect} from "react-redux";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -38,6 +40,15 @@ class Dashboard extends Component {
         });
     }
 
+    saveDashboard = () => {
+        const dashboardObject = {
+            date_created: this.state.date_created,
+            id: this.state.id,
+            title: this.state.newTitle,
+        }
+        this.props.onSaveDashboard(dashboardObject);
+    }
+
     render() {
         return (
             <Col xs="12" sm="3" md="4" key={this.state.id} id={this.state.id}>
@@ -66,7 +77,7 @@ class Dashboard extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary">Save</Button>{' '}
+                        <Button onClick={(event) => {this.toggleConfigureModal(); this.saveDashboard()}} color="primary">Save</Button>{' '}
                         <Button color="secondary" onClick={this.toggleConfigureModal}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
@@ -89,4 +100,10 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => {
+    return {
+        onSaveDashboard: (dashboardObject) => dispatch(actions.saveDashboard(dashboardObject)),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Dashboard);

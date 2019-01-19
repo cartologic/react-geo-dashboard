@@ -4,4 +4,5 @@ export {
     loadSavedDashboards,
     deleteDashboard,
     dismissAlert,
+    saveDashboard,
 } from './Dashboards';

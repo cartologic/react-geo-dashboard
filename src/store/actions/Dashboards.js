@@ -45,3 +45,10 @@ export const dismissAlert = () => {
         type: actionTypes.DISMISSALERT
     };
 };
+
+export const saveDashboard = (dashboardObject) => {
+    return {
+        type: actionTypes.SAVEDASHBOARD,
+        dashboardObject: dashboardObject
+    };
+};

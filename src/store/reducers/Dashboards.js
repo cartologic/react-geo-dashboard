@@ -83,6 +83,28 @@ const dismissAlert = (state, action) => {
     };
 }
 
+const saveDashboard = (state, action) => {
+    let updatedState = state;
+    for (let i=0; i<updatedState.dashboardList.length; i++) {
+        if(updatedState.dashboardList[i].id === action.dashboardObject.id) {
+            let newDashboardList = updatedState.dashboardList;
+            newDashboardList[i] = action.dashboardObject;
+            localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
+            updatedState = {
+                dashboardList: newDashboardList,
+                alertOpen: true,
+                alertMessage: "Dashboard Updated Successfully! Please refresh to see the new changes!",
+                alertColor: "success",
+            };
+            break;
+        }
+    }
+    return {
+        ...state,
+        ...updatedState
+    };
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.CREATE_DASHBOARD: return createDashboard(state, action);
@@ -90,6 +112,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOADSAVEDDASHBOARDS: return loadSavedDashboards(state, action);
         case actionTypes.DELETEDASHBOARD: return deleteDashboard(state, action);
         case actionTypes.DISMISSALERT: return dismissAlert(state, action);
+        case actionTypes.SAVEDASHBOARD: return saveDashboard(state, action);
         default: return state;
     }
 };
