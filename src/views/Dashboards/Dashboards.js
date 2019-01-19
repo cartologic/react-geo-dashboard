@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    Alert,
     Button,
     ButtonGroup,
     Col,
@@ -39,12 +40,14 @@ class Dashboards extends Component {
         const dashboardList = this.props.dashboardList.map(
             (dashboard, index) =>
                 <Dashboard key={dashboard.id} dashboardObject={dashboard}
-                           onDeleteDashboard={this.props.onDeleteDashboard}
-                           continueDeleteDashboard={this.props.continueDeleteDashboard}/>
+                           onDeleteDashboard={this.props.onDeleteDashboard}/>
         );
 
         return (
             <div className="animated fadeIn">
+                <Alert color={this.props.alertColor} isOpen={this.props.alertOpen} toggle={this.props.alertDismiss}>
+                    {this.props.alertMessage}
+                </Alert>
                 <Row>
                     <Col>
                         <ButtonGroup className="mr-2">
@@ -85,7 +88,9 @@ const mapStateToProps = state => {
     return {
         newDashboardModalOpen: state.dashboardsReducer.newDashboardModalOpen,
         dashboardList: state.dashboardsReducer.dashboardList,
-        deleteDashboardModalOpen: state.dashboardsReducer.deleteDashboardModalOpen,
+        alertOpen: state.dashboardsReducer.alertOpen,
+        alertMessage: state.dashboardsReducer.alertMessage,
+        alertColor: state.dashboardsReducer.alertColor,
     };
 }
 
@@ -94,8 +99,8 @@ const mapDispatchToProps = dispatch => {
         onDashboardCreate: (newDashboardTitle) => dispatch(actions.createDashboard(newDashboardTitle)),
         onToggleNewDashboardModal: () => dispatch(actions.toggleNewDashboardModal()),
         loadSavedDashboards: () => dispatch(actions.loadSavedDashboards()),
-        onDeleteDashboard: () => dispatch(actions.deleteDashboard()),
-        continueDeleteDashboard: (dashboardID) => dispatch(actions.continueDeleteDashboard(dashboardID)),
+        onDeleteDashboard: (dashboardID) => dispatch(actions.deleteDashboard(dashboardID)),
+        alertDismiss: () => dispatch(actions.dismissAlert())
     }
 }
 

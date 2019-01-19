@@ -4,7 +4,9 @@ const uuidv = require('uuid/v4');
 const initialState = {
     newDashboardModalOpen: false,
     dashboardList: [],
-    deleteDashboardModalOpen: false,
+    alertOpen: false,
+    alertMessage: "Welcome Django User",
+    alertColor: "success",
 };
 
 const createDashboard = (state, action) => {
@@ -20,6 +22,9 @@ const createDashboard = (state, action) => {
     updatedState = {
         newDashboardModalOpen: false,
         dashboardList: newDashboardList,
+        alertOpen: true,
+        alertMessage: "Dashboard Created Successfully!",
+        alertColor: "success",
     };
     return {
         ...state,
@@ -49,23 +54,47 @@ const loadSavedDashboards = (state, action) => {
 }
 
 const deleteDashboard = (state, action) => {
-    const updatedState = {deleteDashboardModalOpen: !state.deleteDashboardModalOpen};
+    let updatedState = state;
+    for (let i=0; i<updatedState.dashboardList.length; i++) {
+        if(updatedState.dashboardList[i].id === action.dashboardID) {
+            let newDashboardList = updatedState.dashboardList;
+            newDashboardList.splice(i, 1);
+            localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
+            updatedState = {
+                dashboardList: newDashboardList,
+                alertOpen: true,
+                alertMessage: "Dashboard Deleted Successfully!",
+                alertColor: "danger",
+            };
+            break;
+        }
+    }
     return {
         ...state,
         ...updatedState
     };
 }
 
-const continueDeleteDashboard = (state, action) => {
+const dismissAlert = (state, action) => {
+    const updatedState = {alertOpen: !state.alertOpen};
+    return {
+        ...state,
+        ...updatedState
+    };
+}
+
+const saveDashboard = (state, action) => {
     let updatedState = state;
-    for (let i = 0; i < state.dashboardList.length; i++) {
-        if(state.dashboardList[i].id === action.dashboardID) {
-            let newDashboardList = state.dashboardList;
-            newDashboardList.splice(i, 1);
+    for (let i=0; i<updatedState.dashboardList.length; i++) {
+        if(updatedState.dashboardList[i].id === action.dashboardObject.id) {
+            let newDashboardList = updatedState.dashboardList;
+            newDashboardList[i] = action.dashboardObject;
             localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
             updatedState = {
-                deleteDashboardModalOpen: false,
                 dashboardList: newDashboardList,
+                alertOpen: true,
+                alertMessage: "Dashboard Updated Successfully! Please refresh to see the new changes!",
+                alertColor: "success",
             };
             break;
         }
@@ -82,7 +111,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.TOGGLENEWDASHBOARDMODAL: return toggleNewDashboardModal(state, action);
         case actionTypes.LOADSAVEDDASHBOARDS: return loadSavedDashboards(state, action);
         case actionTypes.DELETEDASHBOARD: return deleteDashboard(state, action);
-        case actionTypes.CONTINUEDELETEDASHBOARD: return continueDeleteDashboard(state, action);
+        case actionTypes.DISMISSALERT: return dismissAlert(state, action);
+        case actionTypes.SAVEDASHBOARD: return saveDashboard(state, action);
         default: return state;
     }
 };
