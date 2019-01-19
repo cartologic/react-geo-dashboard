@@ -13,7 +13,6 @@ import {
     Button
 } from "reactstrap";
 import Moment from 'react-moment';
-import connect from "react-redux/es/connect/connect";
 
 
 class Dashboard extends Component {
