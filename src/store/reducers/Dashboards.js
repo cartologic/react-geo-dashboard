@@ -12,7 +12,7 @@ const createDashboard = (state, action) => {
         title: action.newDashboardTitle,
         id: 1,
     })
-    localStorage.setItem('dashboardList', JSON.stringify(newDashboardList));
+    localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
     updatedState = {
         newDashboardModalOpen: false,
         dashboardList: newDashboardList,
@@ -31,10 +31,24 @@ const toggleNewDashboardModal = (state, action) => {
     };
 }
 
+const loadSavedDashboards = (state, action) => {
+    let updatedState = state;
+    const storedData = localStorage.getItem("dashboardList");
+    if (storedData) {
+        const newDashboardList = JSON.parse(storedData);
+        updatedState = {dashboardList: newDashboardList};
+    }
+    return {
+        ...state,
+        ...updatedState
+    };
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.CREATE_DASHBOARD: return createDashboard(state, action);
         case actionTypes.TOGGLENEWDASHBOARDMODAL: return toggleNewDashboardModal(state, action);
+        case actionTypes.LOADSAVEDDASHBOARDS: return loadSavedDashboards(state, action);
         default: return state;
     }
 };

@@ -12,3 +12,9 @@ export const toggleNewDashboardModal = () => {
         type: actionTypes.TOGGLENEWDASHBOARDMODAL
     };
 };
+
+export const loadSavedDashboards = () => {
+    return {
+        type: actionTypes.LOADSAVEDDASHBOARDS
+    };
+};

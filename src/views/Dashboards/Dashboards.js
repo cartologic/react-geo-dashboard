@@ -13,6 +13,7 @@ import {
 } from 'reactstrap';
 import * as actions from '../../store/actions/index';
 import {connect} from "react-redux";
+import Dashboard from "../../components/Dashboard/Dashboard";
 
 
 class Dashboards extends Component {
@@ -20,7 +21,6 @@ class Dashboards extends Component {
         super(props);
         this.state = {
             newDashboardTitle: '',
-            dashboardList: [],
         };
     }
 
@@ -31,11 +31,13 @@ class Dashboards extends Component {
     }
 
     componentDidMount() {
-        // Load saved dashboard if any
+        this.props.loadSavedDashboards();
     }
 
 
     render() {
+        const dashboardList = this.props.dashboardList.map((dashboard, index) => <Dashboard key={index} dashboardObject={dashboard}/>);
+
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -67,6 +69,7 @@ class Dashboards extends Component {
                     </Col>
                 </Row>
                 <Row className="top-buffer">
+                    {dashboardList}
                 </Row>
             </div>
         );
@@ -76,6 +79,7 @@ class Dashboards extends Component {
 const mapStateToProps = state => {
     return {
         newDashboardModalOpen: state.dashboardsReducer.newDashboardModalOpen,
+        dashboardList: state.dashboardsReducer.dashboardList,
     };
 }
 
@@ -83,6 +87,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onDashboardCreate: (newDashboardTitle) => dispatch(actions.createDashboard(newDashboardTitle)),
         onToggleNewDashboardModal: () => dispatch(actions.toggleNewDashboardModal()),
+        loadSavedDashboards: () => dispatch(actions.loadSavedDashboards()),
     }
 }
 
