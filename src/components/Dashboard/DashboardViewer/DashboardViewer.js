@@ -55,7 +55,7 @@ class DashboardViewer extends Component {
     addChart = (chartType) => {
         const updatedWidgets = this.state.widgets;
         updatedWidgets.push(
-            {key: uuidv(), w: 3, h: 8, x: 0, y: 0, type: chartType}
+            {key: uuidv(), w: 3, h: 8, x: 0, y: 0, type: chartType, title: chartType}
             );
         this.setState({
             widgets: updatedWidgets
@@ -90,7 +90,7 @@ class DashboardViewer extends Component {
         return(
             <Card key={el.key} data-grid={{x: el.x, y: el.y, w: el.w, h: el.h}}>
                 <CardHeader>
-                    {el.type}
+                    {el.title}
                     <div className="card-header-actions">
                         <button className="card-header-action btn btn-setting"><i className="icon-settings"></i></button>
                         <button onClick={() => this.removeElement(el.key)} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
