@@ -1,4 +1,4 @@
-import AreaChart from './BarChart';
+import AreaChart from './AreaChart';
 import BarChart from './BarChart';
 import BubbleChart from './BubbleChart';
 import ColumnChart from './ColumnChart';
