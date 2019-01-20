@@ -15,6 +15,7 @@ const createDashboard = (state, action) => {
     let currentDate = new Date();
     newDashboardList.push({
         title: action.newDashboardTitle,
+        theme: "",
         id: uuidv(),
         date_created: currentDate,
         widgets: [],
@@ -91,7 +92,8 @@ const saveDashboard = (state, action) => {
             let newDashboardList = updatedState.dashboardList;
             newDashboardList[i] = {
                 ...newDashboardList[i],
-                title: action.dashboardObject.title
+                title: action.dashboardObject.title,
+                theme: action.dashboardObject.theme,
             };
             localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
             updatedState = {

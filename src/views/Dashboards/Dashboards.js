@@ -35,7 +35,6 @@ class Dashboards extends Component {
         this.props.loadSavedDashboards();
     }
 
-
     render() {
         const dashboardList = this.props.dashboardList.map(
             (dashboard, index) =>
@@ -51,23 +50,30 @@ class Dashboards extends Component {
                 <Row>
                     <Col>
                         <ButtonGroup className="mr-2">
-                            <Button color="primary" onClick={this.props.onToggleNewDashboardModal}>New Dashboard</Button>
-                            <Modal isOpen={this.props.newDashboardModalOpen} toggle={this.props.onToggleNewDashboardModal}
+                            <Button color="primary" onClick={this.props.onToggleNewDashboardModal}>New
+                                Dashboard</Button>
+                            <Modal isOpen={this.props.newDashboardModalOpen}
+                                   toggle={this.props.onToggleNewDashboardModal}
                                    className={'modal-primary'}>
-                                <ModalHeader toggle={this.props.onToggleNewDashboardModal}>Create Dashboard</ModalHeader>
+                                <ModalHeader toggle={this.props.onToggleNewDashboardModal}>Create
+                                    Dashboard</ModalHeader>
                                 <ModalBody>
                                     <Form action="" method="post" className="form-horizontal">
                                         <FormGroup row>
                                             <Col md="2"><Label htmlFor="dashboard-title">Title</Label></Col>
                                             <Col xs="12" md="10">
-                                                <Input onChange={this.setNewDashboardTitle} type="text" id="dashboard-title" name="dashboard-title" placeholder="Please enter title for dashboard"/>
+                                                <Input onChange={this.setNewDashboardTitle} type="text"
+                                                       id="dashboard-title" name="dashboard-title"
+                                                       placeholder="Please enter title for dashboard"/>
                                             </Col>
                                         </FormGroup>
                                     </Form>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button disabled={this.state.newDashboardTitle ? false : true} color="primary" onClick={() => this.props.onDashboardCreate(this.state.newDashboardTitle)}>Create</Button>{' '}
-                                    <Button color="secondary" onClick={this.props.onToggleNewDashboardModal}>Cancel</Button>
+                                    <Button disabled={this.state.newDashboardTitle ? false : true} color="primary"
+                                            onClick={() => this.props.onDashboardCreate(this.state.newDashboardTitle)}>Create</Button>{' '}
+                                    <Button color="secondary"
+                                            onClick={this.props.onToggleNewDashboardModal}>Cancel</Button>
                                 </ModalFooter>
                             </Modal>
                         </ButtonGroup>
