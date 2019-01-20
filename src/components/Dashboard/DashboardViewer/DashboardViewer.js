@@ -6,17 +6,40 @@ import {
     bubbleWidgetIcon, columnWidgetIcon, identifyWidgetIcon,
     legendWidgetIcon, lineWidgetIcon, mapWidgetIcon, pieWidgetIcon
 } from "../../../assets/img/widgets/";
+import _ from "lodash";
+import { WidthProvider, Responsive } from "react-grid-layout";
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
+const uuidv = require('uuid/v4');
 
 class DashboardViewer extends Component {
     loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
     constructor(props) {
         super(props);
+        const dashboardObject = this.loadDashboardFromLS();
         this.toggleToolTip = this.toggleToolTip.bind(this);
         this.state = {
             tooltipOpen: [false, false, false, false, false, false, false, false, false, false],
-            widgets: []
+            layouts: dashboardObject.layouts,
+            widgets: dashboardObject.widgets,
+        }
+    }
+
+    loadDashboardFromLS() {
+        let dashboardExists = false;
+        const storedData = localStorage.getItem("dashboardList");
+        if (storedData) {
+            const newDashboardList = JSON.parse(storedData);
+            for( let i=0; i<newDashboardList.length; i++) {
+                if(newDashboardList[i].id === this.props.match.params.id) { // Found it
+                    dashboardExists = true;
+                    return(newDashboardList[i]);
+                }
+            }
+        }
+        if(!dashboardExists) {
+            this.props.history.push('/dashboards')
         }
     }
 
@@ -31,29 +54,44 @@ class DashboardViewer extends Component {
 
     addChart = (chartType) => {
         const updatedWidgets = this.state.widgets;
-        switch (chartType) {
-            case "area":
-                updatedWidgets.push(<AreaChart/>);
-                break;
-            case "bar":
-                updatedWidgets.push(<BarChart/>);
-                break;
-            case "bubble":
-                updatedWidgets.push(<BubbleChart/>);
-                break;
-            case "column":
-                updatedWidgets.push(<ColumnChart/>);
-                break;
-            case "line":
-                updatedWidgets.push(<LineChart/>);
-                break;
-            default:
-                updatedWidgets.push(<LineChart/>);
-                break;
-        }
+        updatedWidgets.push(
+            {key: uuidv(), w: 2, h: 4, x: 0, y: 0, type: chartType}
+            );
         this.setState({
             widgets: updatedWidgets
         })
+    }
+
+    onLayoutChange(layout, layouts) {
+        const storedData = localStorage.getItem("dashboardList");
+        if (storedData) {
+            const newDashboardList = JSON.parse(storedData);
+            for( let i=0; i<newDashboardList.length; i++) {
+                if(newDashboardList[i].id === this.props.match.params.id) { // Found it
+                    newDashboardList[i].layouts = layouts;
+                    newDashboardList[i].widgets = this.state.widgets;
+                    localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
+                }
+            }
+        }
+        this.setState({ layouts });
+    }
+
+    createElement(el) {
+        let requestedChart = <LineChart/>;
+        switch (el.type) {
+            case "BarChart": requestedChart = <BarChart/>; break;
+            case "AreaChart": requestedChart = <AreaChart/>; break;
+            case "BubbleChart": requestedChart = <BubbleChart/>; break;
+            case "ColumnChart": requestedChart = <ColumnChart/>; break;
+            case "LineChart": requestedChart = <LineChart/>; break;
+            default: requestedChart = <LineChart/>;
+        }
+        return(
+            <div key={el.key} data-grid={{x: el.x, y: el.y, w: el.w, h: el.h}}>
+                {requestedChart}
+            </div>
+        );
     }
 
     render() {
@@ -63,34 +101,34 @@ class DashboardViewer extends Component {
                     <Col xs="12">
                         <Card className="align-items-center">
                         <CardBody>
-                            <Button id="mapWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={mapWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button disabled onClick={() => this.addChart("MapChart")} id="mapWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={mapWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[0]} target="mapWidgetIcon" toggle={() => {this.toggleToolTip(0);}}>Map</Tooltip>
                             {' '}
-                            <Button id="barWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={barWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button onClick={() => this.addChart("BarChart")} id="barWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={barWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[1]} target="barWidgetIcon" toggle={() => {this.toggleToolTip(1);}}>Bar</Tooltip>
                             {' '}
-                            <Button id="pieWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={pieWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button disabled onClick={() => this.addChart("PieChart")} id="pieWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={pieWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[2]} target="pieWidgetIcon" toggle={() => {this.toggleToolTip(2);}}>Pie</Tooltip>
                             {' '}
-                            <Button id="lineWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={lineWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button onClick={() => this.addChart("LineChart")} id="lineWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={lineWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[3]} target="lineWidgetIcon" toggle={() => {this.toggleToolTip(3);}}>Line</Tooltip>
                             {' '}
-                            <Button id="areaWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={areaWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button onClick={() => this.addChart("AreaChart")} id="areaWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={areaWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[4]} target="areaWidgetIcon" toggle={() => {this.toggleToolTip(4);}}>Area</Tooltip>
                             {' '}
-                            <Button id="columnWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={columnWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button onClick={() => this.addChart("ColumnChart")} id="columnWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={columnWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[5]} target="columnWidgetIcon" toggle={() => {this.toggleToolTip(5);}}>Column</Tooltip>
                             {' '}
-                            <Button id="bubbleWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={bubbleWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button onClick={() => this.addChart("BubbleChart")} id="bubbleWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={bubbleWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[6]} target="bubbleWidgetIcon" toggle={() => {this.toggleToolTip(6);}}>Bubble</Tooltip>
                             {' '}
-                            <Button id="aggregateWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={aggregateWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button disabled onClick={() => this.addChart("AggregateChart")} id="aggregateWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={aggregateWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[7]} target="aggregateWidgetIcon" toggle={() => {this.toggleToolTip(7);}}>Aggregate</Tooltip>
                             {' '}
-                            <Button id="legendWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={legendWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button disabled onClick={() => this.addChart("LegendChart")} id="legendWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={legendWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[8]} target="legendWidgetIcon" toggle={() => {this.toggleToolTip(8);}}>Legend</Tooltip>
                             {' '}
-                            <Button id="identifyWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={identifyWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button disabled onClick={() => this.addChart("IdentifyChart")} id="identifyWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={identifyWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[9]} target="identifyWidgetIcon" toggle={() => {this.toggleToolTip(9);}}>Identify</Tooltip>
                             {' '}
                         </CardBody>
@@ -98,7 +136,20 @@ class DashboardViewer extends Component {
                     </Col>
                 </Row>
                 <div>{this.props.match.params.id}</div>
+                <div>
+                    <ResponsiveReactGridLayout
+                        className="layout"
+                        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                        rowHeight={30}
+                        layouts={this.state.layouts}
+                        onLayoutChange={
+                            (layout, layouts) => this.onLayoutChange(layout, layouts)
+                        }>
+                        {_.map(this.state.widgets, el => this.createElement(el))}
 
+
+                    </ResponsiveReactGridLayout>
+                </div>
             </div>
         )
     }
