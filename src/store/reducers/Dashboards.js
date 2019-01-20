@@ -89,7 +89,10 @@ const saveDashboard = (state, action) => {
     for (let i=0; i<updatedState.dashboardList.length; i++) {
         if(updatedState.dashboardList[i].id === action.dashboardObject.id) {
             let newDashboardList = updatedState.dashboardList;
-            newDashboardList[i] = action.dashboardObject;
+            newDashboardList[i] = {
+                ...newDashboardList[i],
+                title: action.dashboardObject.title
+            };
             localStorage.setItem("dashboardList", JSON.stringify(newDashboardList));
             updatedState = {
                 dashboardList: newDashboardList,
