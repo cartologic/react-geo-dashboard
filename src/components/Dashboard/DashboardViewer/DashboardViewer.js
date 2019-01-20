@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AreaChart, ColumnChart, LineChart, BubbleChart, BarChart} from '../../Charts';
-import {Row, Col, Button, CardBody, Card, Tooltip} from "reactstrap";
+import {Row, Col, Button, CardBody, Card, CardHeader, Tooltip} from "reactstrap";
 import {
     aggregateWidgetIcon, areaWidgetIcon, barWidgetIcon,
     bubbleWidgetIcon, columnWidgetIcon, identifyWidgetIcon,
@@ -55,7 +55,7 @@ class DashboardViewer extends Component {
     addChart = (chartType) => {
         const updatedWidgets = this.state.widgets;
         updatedWidgets.push(
-            {key: uuidv(), w: 2, h: 4, x: 0, y: 0, type: chartType}
+            {key: uuidv(), w: 3, h: 8, x: 0, y: 0, type: chartType, title: chartType}
             );
         this.setState({
             widgets: updatedWidgets
@@ -88,10 +88,28 @@ class DashboardViewer extends Component {
             default: requestedChart = <LineChart/>;
         }
         return(
-            <div key={el.key} data-grid={{x: el.x, y: el.y, w: el.w, h: el.h}}>
-                {requestedChart}
-            </div>
+            <Card key={el.key} data-grid={{x: el.x, y: el.y, w: el.w, h: el.h}}>
+                <CardHeader>
+                    {el.title}
+                    <div className="card-header-actions">
+                        <button className="card-header-action btn btn-setting"><i className="icon-settings"></i></button>
+                        <button onClick={() => this.removeElement(el.key)} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
+                    </div>
+                </CardHeader>
+                    {requestedChart}
+            </Card>
         );
+    }
+
+    removeElement = (key) => {
+        let updatedWidgets = this.state.widgets;
+        for(let i=0; i<updatedWidgets.length; i++) {
+            if(updatedWidgets[i].key === key) { // Found it
+                updatedWidgets.splice(i, 1);
+                this.setState({widgets: updatedWidgets});
+                break;
+            }
+        }
     }
 
     render() {
@@ -135,7 +153,6 @@ class DashboardViewer extends Component {
                         </Card>
                     </Col>
                 </Row>
-                <div>{this.props.match.params.id}</div>
                 <div>
                     <ResponsiveReactGridLayout
                         className="layout"
