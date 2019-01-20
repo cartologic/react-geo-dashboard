@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AreaChart, ColumnChart, LineChart, BubbleChart, BarChart} from '../../Charts';
+import {AreaChart, ColumnChart, LineChart, BubbleChart, BarChart, MapChart} from '../../Charts';
 import {Row, Col, Button, CardBody, Card, CardHeader, Tooltip} from "reactstrap";
 import {
     aggregateWidgetIcon, areaWidgetIcon, barWidgetIcon,
@@ -85,6 +85,7 @@ class DashboardViewer extends Component {
             case "BubbleChart": requestedChart = <BubbleChart/>; break;
             case "ColumnChart": requestedChart = <ColumnChart/>; break;
             case "LineChart": requestedChart = <LineChart/>; break;
+            case "MapChart": requestedChart = <MapChart/>; break;
             default: requestedChart = <LineChart/>;
         }
         return(
@@ -119,7 +120,7 @@ class DashboardViewer extends Component {
                     <Col xs="12">
                         <Card className="align-items-center">
                         <CardBody>
-                            <Button disabled onClick={() => this.addChart("MapChart")} id="mapWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={mapWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button onClick={() => this.addChart("MapChart")} id="mapWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={mapWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[0]} target="mapWidgetIcon" toggle={() => {this.toggleToolTip(0);}}>Map</Tooltip>
                             {' '}
                             <Button onClick={() => this.addChart("BarChart")} id="barWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={barWidgetIcon} alt="WidgetIcon"></img></div></Button>
@@ -163,8 +164,6 @@ class DashboardViewer extends Component {
                             (layout, layouts) => this.onLayoutChange(layout, layouts)
                         }>
                         {_.map(this.state.widgets, el => this.createElement(el))}
-
-
                     </ResponsiveReactGridLayout>
                 </div>
             </div>
