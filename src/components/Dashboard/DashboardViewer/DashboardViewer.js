@@ -55,7 +55,7 @@ class DashboardViewer extends Component {
     addChart = (chartType) => {
         const updatedWidgets = this.state.widgets;
         updatedWidgets.push(
-            {key: uuidv(), w: 2, h: 4, x: 0, y: 0, type: chartType}
+            {key: uuidv(), w: 3, h: 8, x: 0, y: 0, type: chartType}
             );
         this.setState({
             widgets: updatedWidgets
@@ -93,12 +93,23 @@ class DashboardViewer extends Component {
                     {el.type}
                     <div className="card-header-actions">
                         <button className="card-header-action btn btn-setting"><i className="icon-settings"></i></button>
-                        <button className="card-header-action btn btn-close"><i className="icon-close"></i></button>
+                        <button onClick={() => this.removeElement(el.key)} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
                     </div>
                 </CardHeader>
                     {requestedChart}
             </Card>
         );
+    }
+
+    removeElement = (key) => {
+        let updatedWidgets = this.state.widgets;
+        for(let i=0; i<updatedWidgets.length; i++) {
+            if(updatedWidgets[i].key === key) { // Found it
+                updatedWidgets.splice(i, 1);
+                this.setState({widgets: updatedWidgets});
+                break;
+            }
+        }
     }
 
     render() {
