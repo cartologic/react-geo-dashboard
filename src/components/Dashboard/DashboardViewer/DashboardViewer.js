@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AreaChart, ColumnChart, LineChart, BubbleChart, BarChart, MapChart} from '../../Charts';
+import {AreaChart, ColumnChart, LineChart, BubbleChart, BarChart, MapChart, AggregateChart} from '../../Charts';
 import {Row, Col, Button, CardBody, Card, CardHeader, Tooltip} from "reactstrap";
 import {
     aggregateWidgetIcon, areaWidgetIcon, barWidgetIcon,
@@ -86,6 +86,7 @@ class DashboardViewer extends Component {
             case "ColumnChart": requestedChart = <ColumnChart/>; break;
             case "LineChart": requestedChart = <LineChart/>; break;
             case "MapChart": requestedChart = <MapChart/>; break;
+            case "AggregateChart": requestedChart = <AggregateChart/>; break;
             default: requestedChart = <LineChart/>;
         }
         return(
@@ -141,7 +142,7 @@ class DashboardViewer extends Component {
                             <Button onClick={() => this.addChart("BubbleChart")} id="bubbleWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={bubbleWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[6]} target="bubbleWidgetIcon" toggle={() => {this.toggleToolTip(6);}}>Bubble</Tooltip>
                             {' '}
-                            <Button disabled onClick={() => this.addChart("AggregateChart")} id="aggregateWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={aggregateWidgetIcon} alt="WidgetIcon"></img></div></Button>
+                            <Button onClick={() => this.addChart("AggregateChart")} id="aggregateWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={aggregateWidgetIcon} alt="WidgetIcon"></img></div></Button>
                             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen[7]} target="aggregateWidgetIcon" toggle={() => {this.toggleToolTip(7);}}>Aggregate</Tooltip>
                             {' '}
                             <Button disabled onClick={() => this.addChart("LegendChart")} id="legendWidgetIcon" color="light"><div className="avatar float-right"><img className="img-avatar" src={legendWidgetIcon} alt="WidgetIcon"></img></div></Button>
