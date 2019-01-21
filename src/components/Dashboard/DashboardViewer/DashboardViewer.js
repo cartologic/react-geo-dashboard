@@ -20,6 +20,7 @@ class DashboardViewer extends Component {
         const dashboardObject = this.loadDashboardFromLS();
         this.toggleToolTip = this.toggleToolTip.bind(this);
         this.state = {
+            dashboardID: props.match.params.id,
             tooltipOpen: [false, false, false, false, false, false, false, false, false, false],
             layouts: dashboardObject.layouts,
             widgets: dashboardObject.widgets,
@@ -55,7 +56,7 @@ class DashboardViewer extends Component {
     addChart = (chartType) => {
         const updatedWidgets = this.state.widgets;
         updatedWidgets.push(
-            {key: uuidv(), w: 3, h: 8, x: 0, y: 0, type: chartType, title: chartType}
+            {key: uuidv(), w: 3, h: 8, x: 0, y: 0, type: chartType, title: chartType, config: {}}
             );
         this.setState({
             widgets: updatedWidgets
@@ -85,7 +86,7 @@ class DashboardViewer extends Component {
             case "BubbleChart": requestedChart = <BubbleChart/>; break;
             case "ColumnChart": requestedChart = <ColumnChart/>; break;
             case "LineChart": requestedChart = <LineChart/>; break;
-            case "MapChart": requestedChart = <MapChart/>; break;
+            case "MapChart": requestedChart = <MapChart dashboardID={this.state.dashboardID} widgetID={el.key} config={el.config}/>; break;
             case "AggregateChart": requestedChart = <AggregateChart/>; break;
             default: requestedChart = <LineChart/>;
         }
@@ -94,6 +95,7 @@ class DashboardViewer extends Component {
                 <CardHeader>
                     {el.title}
                     <div className="card-header-actions">
+                        <button className="card-header-action btn"><i className="fa fa-save"></i></button>
                         <button className="card-header-action btn btn-setting"><i className="icon-settings"></i></button>
                         <button onClick={() => this.removeElement(el.key)} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
                     </div>

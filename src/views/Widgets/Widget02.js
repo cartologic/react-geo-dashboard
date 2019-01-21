@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBody, CardFooter } from 'reactstrap';
 import classNames from 'classnames';
 import { mapToCssModules } from 'reactstrap/lib/utils';
 
@@ -44,17 +43,6 @@ class Widget02 extends Component {
     const blockIcon = function (icon) {
       const classes = classNames(icon, 'bg-' + card.color, padding.icon, 'font-2xl mr-3 float-left');
       return (<i className={classes}></i>);
-    };
-
-    const cardFooter = function () {
-      if (footer) {
-        return (
-          <CardFooter className="px-3 py-2">
-            <a className="font-weight-bold font-xs btn-block text-muted" href={link}>View More
-              <i className="fa fa-angle-right float-right font-lg"></i></a>
-          </CardFooter>
-        );
-      }
     };
 
     return (
