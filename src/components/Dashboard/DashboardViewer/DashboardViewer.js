@@ -6,6 +6,8 @@ import {
     bubbleWidgetIcon, columnWidgetIcon, identifyWidgetIcon,
     legendWidgetIcon, lineWidgetIcon, mapWidgetIcon, pieWidgetIcon
 } from "../../../assets/img/widgets/";
+import { Fab, Action } from 'react-tiny-fab';
+import 'react-tiny-fab/dist/styles.min.css';
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -119,6 +121,16 @@ class DashboardViewer extends Component {
     render() {
         return (
             <div className="animated fadeIn">
+                <Fab
+                    mainButtonStyles={{background:'#20a8d8'}}
+                    event="click"
+                    icon={<i className="fa fa-superpowers" />}>
+                    <Action
+                        text="Edit Mode"
+                        onClick={() => console.log("Clicked")}
+                        style={{background: '#4dbd74'}}><i className="fa fa-edit" />
+                    </Action>
+                </Fab>
                 <Row>
                     <Col xs="12">
                         <Card className="align-items-center">
