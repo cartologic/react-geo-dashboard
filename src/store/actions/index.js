@@ -5,4 +5,5 @@ export {
     deleteDashboard,
     dismissAlert,
     saveDashboard,
+    toggleEditMode,
 } from './Dashboards';
