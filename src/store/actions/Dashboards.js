@@ -3,7 +3,9 @@ import * as actionTypes from './actionTypes';
 export const createDashboard = (newDashboardTitle) => {
     return dispatch => {
         dispatch(processWithCreateDashboard(newDashboardTitle));
-        setTimeout(() => { dispatch(dismissAlert()); }, 1 * 5000);
+        setTimeout(() => {
+            dispatch(dismissAlert());
+        }, 1 * 5000);
     }
 };
 
@@ -29,7 +31,9 @@ export const loadSavedDashboards = () => {
 export const deleteDashboard = (dashboardID) => {
     return dispatch => {
         dispatch(proceedWithDeleteDashboard(dashboardID));
-        setTimeout(() => { dispatch(dismissAlert()); }, 1 * 5000);
+        setTimeout(() => {
+            dispatch(dismissAlert());
+        }, 1 * 5000);
     }
 };
 
@@ -50,5 +54,11 @@ export const saveDashboard = (dashboardObject) => {
     return {
         type: actionTypes.SAVEDASHBOARD,
         dashboardObject: dashboardObject
+    };
+};
+
+export const toggleEditMode = () => {
+    return {
+        type: actionTypes.TOGGLEEDITMODE
     };
 };

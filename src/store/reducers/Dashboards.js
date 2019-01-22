@@ -7,6 +7,7 @@ const initialState = {
     alertOpen: false,
     alertMessage: "Welcome Django User",
     alertColor: "success",
+    editMode: false,
 };
 
 const createDashboard = (state, action) => {
@@ -109,6 +110,14 @@ const saveDashboard = (state, action) => {
         ...state,
         ...updatedState
     };
+};
+
+const toggleEditMode= (state, action) => {
+    const updatedState = {editMode: !state.editMode};
+    return {
+        ...state,
+        ...updatedState
+    };
 }
 
 const reducer = (state = initialState, action) => {
@@ -119,6 +128,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.DELETEDASHBOARD: return deleteDashboard(state, action);
         case actionTypes.DISMISSALERT: return dismissAlert(state, action);
         case actionTypes.SAVEDASHBOARD: return saveDashboard(state, action);
+        case actionTypes.TOGGLEEDITMODE: return toggleEditMode(state, action);
         default: return state;
     }
 };
