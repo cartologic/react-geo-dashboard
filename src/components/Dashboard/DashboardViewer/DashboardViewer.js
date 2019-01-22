@@ -167,7 +167,8 @@ class DashboardViewer extends Component {
             <div className="animated fadeIn">
                 <Fab
                     mainButtonStyles={{background:'#20a8d8'}}
-                    event="click"
+                    event="hover"
+                    position={{bottom:30, right:0}}
                     icon={<i className="fa fa-superpowers" />}>
                     <Action
                         text="Edit Mode"
