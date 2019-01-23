@@ -94,8 +94,9 @@ class DashboardViewer extends Component {
             case "AggregateChart": requestedChart = <AggregateChart/>; break;
             default: requestedChart = <LineChart/>;
         }
-        return(
-            <Card key={el.key} data-grid={{x: el.x, y: el.y, w: el.w, h: el.h}}>
+        let cardHeader = null;
+        if(this.props.editMode) {
+            cardHeader = (
                 <CardHeader>
                     {el.title}
                     <div className="card-header-actions">
@@ -104,7 +105,12 @@ class DashboardViewer extends Component {
                         <button onClick={() => this.removeElement(el.key)} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
                     </div>
                 </CardHeader>
-                    {requestedChart}
+            )
+        }
+        return(
+            <Card key={el.key} data-grid={{x: el.x, y: el.y, w: el.w, h: el.h}}>
+                {cardHeader}
+                {requestedChart}
             </Card>
         );
     }
@@ -121,9 +127,9 @@ class DashboardViewer extends Component {
     }
 
     render() {
-        let widgetsHolder = null;
+        let widgetsBarHolder = null;
         if(this.props.editMode)
-            widgetsHolder = (
+            widgetsBarHolder = (
                 <Row>
                     <Col xs="12">
                         <Card className="align-items-center">
@@ -176,9 +182,11 @@ class DashboardViewer extends Component {
                         style={{background: this.props.editMode ? '#f86c6b' : '#4dbd74'}}><i className="fa fa-edit" />
                     </Action>
                 </Fab>
-                {widgetsHolder}
+                {widgetsBarHolder}
                 <div>
                     <ResponsiveReactGridLayout
+                        isDraggable={this.props.editMode}
+                        isResizable={this.props.editMode}
                         className="layout"
                         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                         rowHeight={30}
