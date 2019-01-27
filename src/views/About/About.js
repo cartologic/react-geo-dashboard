@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 
 
-class Settings extends Component {
+class About extends Component {
     render() {
         return (
             <div className="animated fadeIn">
@@ -13,9 +13,11 @@ class Settings extends Component {
                     <Col>
                         <Card>
                             <CardHeader>
-                                Settings
+                                About
                             </CardHeader>
                             <CardBody>
+                                <p><a href="https://github.com/cartologic/geo-dashboard">Geo Dashboard v{process.env.REACT_APP_VERSION}</a> &copy;</p>
+                                <p className="ml-auto">Powered by <a href="http://cartologic.com/">Cartologic R&D</a></p>
                             </CardBody>
                         </Card>
                     </Col>
@@ -25,4 +27,4 @@ class Settings extends Component {
     }
 }
 
-export default Settings;
+export default About;

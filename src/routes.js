@@ -3,14 +3,14 @@ import DefaultLayout from './containers/DefaultLayout';
 
 const Dashboards = React.lazy(() => import('./views/Dashboards'));
 const DashboardViewer = React.lazy(() => import('./components/Dashboard/DashboardViewer'));
-const Settings = React.lazy(() => import('./views/Settings'));
+const About = React.lazy(() => import('./views/About'));
 
 
 const routes = [
     {path: '/', exact: true, name: 'Base', component: DefaultLayout},
     {path: '/dashboards', exact: true, name: 'Dashboards', component: Dashboards},
     {path: '/dashboards/:id', exact: true, name: 'Dashboard Details', component: DashboardViewer},
-    {path: '/settings', exact: true, name: 'Settings', component: Settings},
+    {path: '/about', exact: true, name: 'About', component: About},
 ];
 
 export default routes;
