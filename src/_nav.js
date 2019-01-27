@@ -10,9 +10,9 @@ export default {
       },
     },
     {
-      name: 'Settings',
-      url: '/settings',
-      icon: 'icon-settings',
+      name: 'About',
+      url: '/about',
+      icon: 'icon-info',
     }
   ],
 };

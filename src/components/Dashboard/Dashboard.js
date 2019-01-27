@@ -60,7 +60,7 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <Col xs="12" sm="3" md="4" key={this.state.id} id={this.state.id}>
+            <Col xs="12" sm="2" md="2" key={this.state.id} id={this.state.id}>
                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleDeleteModal} // Delete Modal
                        className={'modal-danger'}>
                     <ModalHeader toggle={this.toggleDeleteModal}>Delete Dashboard {this.state.title} ?</ModalHeader>
