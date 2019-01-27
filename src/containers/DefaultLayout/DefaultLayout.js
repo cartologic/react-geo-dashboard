@@ -3,13 +3,11 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 
 import {
-    AppBreadcrumb,
     AppHeader,
     AppSidebar,
     AppSidebarFooter,
     AppSidebarForm,
     AppSidebarHeader,
-    AppSidebarMinimizer,
     AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
@@ -38,10 +36,8 @@ class DefaultLayout extends Component {
                             <AppSidebarNav navConfig={navigation} {...this.props} />
                         </Suspense>
                         <AppSidebarFooter/>
-                        <AppSidebarMinimizer/>
                     </AppSidebar>
                     <main className="main">
-                        <AppBreadcrumb appRoutes={routes}/>
                         <Container fluid>
                             <Suspense fallback={this.loading()}>
                                 <Switch>
