@@ -1,14 +1,14 @@
 {
-    "name": "cartoview_dashboard_2",
+    "name": "react_geo_dashboard",
     "version": "1.5.7",
-    "homepage": "https://cartologic.github.io/geo-dashboard",
+    "homepage": "https://cartologic.github.io/react-geo-dashboard",
     "description": "React Dashboard for Geo Data",
     "author": "cartologic <cartoview@cartologic.com> (http://cartologic.com/)",
     "license": "BSD Clause 2",
     "private": true,
     "repository": {
         "type": "git",
-        "url": "git@github.com/cartologic/geo-dashboard.git"
+        "url": "git@github.com/cartologic/react-geo-dashboard.git"
     },
     "dependencies": {
         "@boundlessgeo/sdk": "^2.7.5",
@@ -64,7 +64,7 @@
         "deploy": "gh-pages -d build"
     },
     "bugs": {
-        "url": "git@github.com/cartologic/cartoview_dashboard_2.git/issues"
+        "url": "git@github.com/cartologic/react-geo-dashboard.git/issues"
     },
     "eslintConfig": {
         "extends": "react-app"
