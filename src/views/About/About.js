@@ -16,7 +16,7 @@ class About extends Component {
                                 About
                             </CardHeader>
                             <CardBody>
-                                <p><a href="https://github.com/cartologic/geo-dashboard">Geo Dashboard v{process.env.REACT_APP_VERSION}</a> &copy;</p>
+                                <p><a href="https://github.com/cartologic/react-geo-dashboard">React Geo Dashboard v{process.env.REACT_APP_VERSION}</a> &copy;</p>
                                 <p className="ml-auto">Powered by <a href="http://cartologic.com/">Cartologic R&D</a></p>
                             </CardBody>
                         </Card>
