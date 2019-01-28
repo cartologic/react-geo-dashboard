@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/geo-dashboard/precache-manifest.d128b52a475882efb149e40acb406189.js"
+  "/react-geo-dashboard/precache-manifest.7880e34e16cbd48e032c8faba4610bad.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/geo-dashboard/index.html", {
+workbox.routing.registerNavigationRoute("/react-geo-dashboard/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
