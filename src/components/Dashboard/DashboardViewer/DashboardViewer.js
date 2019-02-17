@@ -100,8 +100,6 @@ class DashboardViewer extends Component {
                 <CardHeader>
                     {el.title}
                     <div className="card-header-actions">
-                        <button className="card-header-action btn"><i className="fa fa-save"></i></button>
-                        <button className="card-header-action btn btn-setting"><i className="icon-settings"></i></button>
                         <button onClick={() => this.removeElement(el.key)} className="card-header-action btn btn-close"><i className="icon-close"></i></button>
                     </div>
                 </CardHeader>
